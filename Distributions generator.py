@@ -78,7 +78,8 @@ class Request:
 
 class RequestGenerator:
     """- throughput in req per sec - end time in sec - request_list in microseconds """
-    def __init__ (self, throughput = None, end_time = None, computation_difficulty = 0, HEAP_usage = 0, memory_size = 100, memory_treated = 3):
+    def __init__ (self, throughput = None, end_time = None, computation_difficulty = 0,
+                  HEAP_usage = 0, memory_size = 100, memory_treated = 3):
         microsecond = 1000000
         self.__request_list = []
         if not (throughput is None) and not (end_time is None):
@@ -183,11 +184,11 @@ class Core:
 class RequestProcessor:
 
     def __init__ (self, cores_number = 1, request_list = None, HEAP = 4000, memory_size = 100,
-                  cores_computational_error_sigma = 0, GC_time_coefficient = 1):
+                  cores_computation_error_sigma = 0, GC_time_coefficient = 1):
         self.__timeline = SortedCollection([], TimelineEvent.getEventTime)
         self.__cores_number = cores_number
         self.__free_cores = cores_number
-        self.__cores = [Core(i, cores_computational_error_sigma) for i in range(cores_number)]
+        self.__cores = [Core(i, cores_computation_error_sigma) for i in range(cores_number)]
 
         self.__queue = []
 
@@ -353,6 +354,7 @@ class RequestProcessor:
 
     def getProcessedRequestList(self):
         return self.__processed_request_list
+
 
 def plotDistribution(times, min_range = None, max_range = None):
     distr = [0 for i in range(int(max(times)) + 1)]
